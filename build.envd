@@ -3,6 +3,7 @@
 
 def basic():
     install.python()
+    install.apt_packages(["git"])
     install.python_packages(requirements="requirements.txt")
 
 
@@ -11,7 +12,7 @@ def basic():
 def build():
     basic()
     io.copy("main.py", "/")
-    config.entrypoint(["python", "main.py"])
+    config.entrypoint(["python", "main.py", "--base_url", "decapoda-research/llama-7b-hf", "--ft_ckpt_url", "tloen/alpaca-lora-7b","--port","8080"])
 
 
 # build_gpu is a custom build function that will be used to build the GPU image.
@@ -20,4 +21,4 @@ def build_gpu():
     basic()
     install.cuda(version="11.6.2")
     io.copy("main.py", "/")
-    config.entrypoint(["python", "main.py"])
+    config.entrypoint(["python", "main.py", "--base_url", "decapoda-research/llama-7b-hf", "--ft_ckpt_url", "tloen/alpaca-lora-7b","--port","8080"])
